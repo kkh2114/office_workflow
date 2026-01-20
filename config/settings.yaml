@@ -1,0 +1,110 @@
+# LLM-CAD Integration System Configuration
+
+system:
+  name: "LLM-CAD Integration System"
+  version: "1.0.0-mvp"
+  description: "Autonomous Architectural Design System (A-ADS)"
+
+# LLM Configuration
+llm:
+  provider: "anthropic"  # anthropic or openai
+  model: "claude-3-5-sonnet-20241022"
+  temperature: 0.1  # Low temperature for deterministic outputs
+  max_tokens: 4096
+  timeout: 60  # seconds
+
+# CAD Configuration
+cad:
+  default_format: "dxf"
+  dxf_version: "R2018"
+  units: "meters"
+
+  # Layer Standards
+  layers:
+    - name: "WALL"
+      color: 7
+      linetype: "CONTINUOUS"
+    - name: "DOOR"
+      color: 3
+      linetype: "CONTINUOUS"
+    - name: "WINDOW"
+      color: 4
+      linetype: "CONTINUOUS"
+    - name: "FURNITURE"
+      color: 8
+      linetype: "CONTINUOUS"
+    - name: "DIMENSION"
+      color: 1
+      linetype: "CONTINUOUS"
+
+  # Default Dimensions (in meters)
+  defaults:
+    wall_thickness: 0.2
+    door_width: 0.9
+    door_height: 2.1
+    window_width: 1.5
+    window_height: 1.2
+    ceiling_height: 2.8
+
+# Agent Configuration
+agents:
+  orchestrator:
+    enabled: true
+    max_retries: 3
+
+  autocad:
+    enabled: true
+    max_concurrent_tasks: 5
+
+  revit:
+    enabled: false  # Phase 2
+
+  rhino:
+    enabled: false  # Phase 2
+
+  compliance:
+    enabled: false  # Phase 3
+
+  structural:
+    enabled: false  # Phase 3
+
+# Validation
+validation:
+  strict_schema: true
+  validate_geometry: true
+  check_closed_polylines: true
+
+# Building Code (Korean Standards - Phase 3)
+building_code:
+  enabled: false
+  standards:
+    - name: "용적률"
+      enabled: false
+    - name: "건폐율"
+      enabled: false
+    - name: "층고"
+      min_value: 2.1
+      enabled: false
+
+# Logging
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/system.log"
+  max_file_size: 10485760  # 10MB
+  backup_count: 5
+
+# Performance
+performance:
+  enable_caching: true
+  cache_ttl: 3600  # seconds
+  max_concurrent_agents: 10
+  async_enabled: true
+
+# Output
+output:
+  directory: "./output"
+  temp_directory: "./temp"
+  keep_temp_files: false
+  generate_preview: false  # Phase 2: Generate PNG preview
+  generate_report: true

@@ -1,0 +1,44 @@
+{
+  "project_info": {
+    "name": "Simple Room Test",
+    "client": "Test Client"
+  },
+  "building": {
+    "floors": [
+      {
+        "level": 1,
+        "height": 2.8,
+        "rooms": [
+          {
+            "name": "Test Room",
+            "type": "living_room",
+            "geometry": {
+              "type": "Polygon",
+              "coordinates": [
+                [0, 0],
+                [5, 0],
+                [5, 4],
+                [0, 4],
+                [0, 0]
+              ]
+            },
+            "doors": [
+              {
+                "wall_index": 0,
+                "position": 0.5,
+                "width": 0.9
+              }
+            ],
+            "windows": [
+              {
+                "wall_index": 2,
+                "position": 0.5,
+                "width": 1.5
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

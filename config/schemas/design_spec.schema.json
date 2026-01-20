@@ -1,0 +1,385 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://llm-cad-integration/schemas/design_spec.schema.json",
+  "title": "ArchitecturalDesignSpec",
+  "description": "Single Source of Truth for architectural design specifications",
+  "type": "object",
+  "required": ["project_info", "building"],
+  "properties": {
+    "project_info": {
+      "type": "object",
+      "description": "Project metadata and client information",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Project name",
+          "minLength": 1
+        },
+        "client": {
+          "type": "string",
+          "description": "Client name"
+        },
+        "address": {
+          "type": "string",
+          "description": "Project site address"
+        },
+        "architect": {
+          "type": "string",
+          "description": "Lead architect name"
+        },
+        "date": {
+          "type": "string",
+          "format": "date",
+          "description": "Project date (YYYY-MM-DD)"
+        }
+      }
+    },
+    "site": {
+      "type": "object",
+      "description": "Site information and constraints",
+      "properties": {
+        "area": {
+          "type": "number",
+          "description": "Site area in square meters",
+          "minimum": 0
+        },
+        "zoning": {
+          "type": "string",
+          "description": "Zoning classification",
+          "enum": [
+            "residential",
+            "commercial",
+            "industrial",
+            "mixed_use",
+            "institutional"
+          ]
+        },
+        "max_far": {
+          "type": "number",
+          "description": "Maximum floor area ratio (용적률)",
+          "minimum": 0,
+          "maximum": 1000
+        },
+        "max_bcr": {
+          "type": "number",
+          "description": "Maximum building coverage ratio (건폐율)",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "setbacks": {
+          "type": "object",
+          "description": "Required setbacks in meters",
+          "properties": {
+            "front": { "type": "number", "minimum": 0 },
+            "rear": { "type": "number", "minimum": 0 },
+            "left": { "type": "number", "minimum": 0 },
+            "right": { "type": "number", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "building": {
+      "type": "object",
+      "description": "Building design specification",
+      "required": ["floors"],
+      "properties": {
+        "floors": {
+          "type": "array",
+          "description": "Array of floor specifications",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/Floor"
+          }
+        },
+        "structure": {
+          "type": "object",
+          "description": "Structural system information",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["concrete", "steel", "wood", "mixed"]
+            },
+            "grid_spacing": {
+              "type": "number",
+              "description": "Column grid spacing in meters"
+            }
+          }
+        },
+        "materials": {
+          "type": "object",
+          "description": "Material specifications",
+          "properties": {
+            "exterior_wall": { "type": "string" },
+            "interior_wall": { "type": "string" },
+            "flooring": { "type": "string" },
+            "roofing": { "type": "string" }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Floor": {
+      "type": "object",
+      "description": "Single floor specification",
+      "required": ["level", "rooms"],
+      "properties": {
+        "level": {
+          "type": "integer",
+          "description": "Floor level (1=ground floor, 2=second floor, etc.)"
+        },
+        "height": {
+          "type": "number",
+          "description": "Floor-to-floor height in meters",
+          "minimum": 2.1,
+          "default": 2.8
+        },
+        "area": {
+          "type": "number",
+          "description": "Total floor area in square meters",
+          "minimum": 0
+        },
+        "rooms": {
+          "type": "array",
+          "description": "Array of room specifications",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/Room"
+          }
+        }
+      }
+    },
+    "Room": {
+      "type": "object",
+      "description": "Single room specification",
+      "required": ["name", "geometry"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Room name (e.g., '거실', '침실1')",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "description": "Room functional type",
+          "enum": [
+            "living_room",
+            "bedroom",
+            "kitchen",
+            "bathroom",
+            "dining_room",
+            "study",
+            "storage",
+            "hallway",
+            "balcony",
+            "utility",
+            "other"
+          ]
+        },
+        "area": {
+          "type": "number",
+          "description": "Room area in square meters",
+          "minimum": 0
+        },
+        "geometry": {
+          "$ref": "#/definitions/Polygon",
+          "description": "Room boundary polygon in floor plan coordinates"
+        },
+        "doors": {
+          "type": "array",
+          "description": "Doors in this room",
+          "items": {
+            "$ref": "#/definitions/Door"
+          }
+        },
+        "windows": {
+          "type": "array",
+          "description": "Windows in this room",
+          "items": {
+            "$ref": "#/definitions/Window"
+          }
+        },
+        "furniture": {
+          "type": "array",
+          "description": "Furniture items in this room",
+          "items": {
+            "$ref": "#/definitions/Furniture"
+          }
+        },
+        "materials": {
+          "type": "object",
+          "description": "Room-specific materials",
+          "properties": {
+            "floor": { "type": "string" },
+            "wall": { "type": "string" },
+            "ceiling": { "type": "string" }
+          }
+        }
+      }
+    },
+    "Polygon": {
+      "type": "object",
+      "description": "Polygon geometry (GeoJSON-like format)",
+      "required": ["type", "coordinates"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["Polygon"],
+          "description": "Geometry type"
+        },
+        "coordinates": {
+          "type": "array",
+          "description": "Array of [x, y] coordinate pairs forming a closed polygon. First and last points should be identical for closed polygons.",
+          "minItems": 3,
+          "items": {
+            "type": "array",
+            "description": "[x, y] coordinate pair in meters",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "Door": {
+      "type": "object",
+      "description": "Door specification",
+      "required": ["wall_index", "position"],
+      "properties": {
+        "wall_index": {
+          "type": "integer",
+          "description": "Index of the wall segment (0-based) where door is placed",
+          "minimum": 0
+        },
+        "position": {
+          "type": "number",
+          "description": "Position along the wall (0.0 = start, 1.0 = end)",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "width": {
+          "type": "number",
+          "description": "Door width in meters",
+          "minimum": 0.6,
+          "default": 0.9
+        },
+        "height": {
+          "type": "number",
+          "description": "Door height in meters",
+          "minimum": 2.0,
+          "default": 2.1
+        },
+        "type": {
+          "type": "string",
+          "enum": ["single", "double", "sliding", "folding"],
+          "default": "single"
+        },
+        "swing_direction": {
+          "type": "string",
+          "enum": ["inward", "outward"],
+          "default": "inward"
+        }
+      }
+    },
+    "Window": {
+      "type": "object",
+      "description": "Window specification",
+      "required": ["wall_index", "position"],
+      "properties": {
+        "wall_index": {
+          "type": "integer",
+          "description": "Index of the wall segment (0-based) where window is placed",
+          "minimum": 0
+        },
+        "position": {
+          "type": "number",
+          "description": "Position along the wall (0.0 = start, 1.0 = end)",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "width": {
+          "type": "number",
+          "description": "Window width in meters",
+          "minimum": 0.6,
+          "default": 1.5
+        },
+        "height": {
+          "type": "number",
+          "description": "Window height in meters",
+          "minimum": 0.6,
+          "default": 1.2
+        },
+        "sill_height": {
+          "type": "number",
+          "description": "Window sill height from floor in meters",
+          "minimum": 0,
+          "default": 0.9
+        },
+        "type": {
+          "type": "string",
+          "enum": ["fixed", "casement", "sliding", "awning"],
+          "default": "sliding"
+        }
+      }
+    },
+    "Furniture": {
+      "type": "object",
+      "description": "Furniture item specification",
+      "required": ["type", "position"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Furniture type",
+          "enum": [
+            "bed",
+            "desk",
+            "chair",
+            "sofa",
+            "table",
+            "cabinet",
+            "wardrobe",
+            "refrigerator",
+            "stove",
+            "sink",
+            "toilet",
+            "bathtub",
+            "shower",
+            "other"
+          ]
+        },
+        "position": {
+          "type": "object",
+          "description": "Furniture center position",
+          "required": ["x", "y"],
+          "properties": {
+            "x": { "type": "number" },
+            "y": { "type": "number" },
+            "rotation": {
+              "type": "number",
+              "description": "Rotation angle in degrees",
+              "minimum": 0,
+              "maximum": 360,
+              "default": 0
+            }
+          }
+        },
+        "dimensions": {
+          "type": "object",
+          "description": "Furniture dimensions",
+          "properties": {
+            "width": { "type": "number", "minimum": 0 },
+            "depth": { "type": "number", "minimum": 0 },
+            "height": { "type": "number", "minimum": 0 }
+          }
+        },
+        "label": {
+          "type": "string",
+          "description": "Custom label for furniture item"
+        }
+      }
+    }
+  }
+}

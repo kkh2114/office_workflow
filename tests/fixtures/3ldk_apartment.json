@@ -1,0 +1,311 @@
+{
+  "project_info": {
+    "name": "3LDK 아파트 평면도",
+    "client": "테스트 클라이언트",
+    "architect": "LLM-CAD System",
+    "date": "2025-01-20"
+  },
+  "site": {
+    "area": 100,
+    "zoning": "residential"
+  },
+  "building": {
+    "floors": [
+      {
+        "level": 1,
+        "height": 2.8,
+        "rooms": [
+          {
+            "name": "거실",
+            "type": "living_room",
+            "area": 20,
+            "geometry": {
+              "type": "Polygon",
+              "coordinates": [
+                [0, 0],
+                [6, 0],
+                [6, 4],
+                [0, 4],
+                [0, 0]
+              ]
+            },
+            "doors": [
+              {
+                "wall_index": 0,
+                "position": 0.5,
+                "width": 0.9,
+                "type": "single",
+                "swing_direction": "inward"
+              }
+            ],
+            "windows": [
+              {
+                "wall_index": 2,
+                "position": 0.3,
+                "width": 1.5,
+                "height": 1.2,
+                "sill_height": 0.9,
+                "type": "sliding"
+              },
+              {
+                "wall_index": 2,
+                "position": 0.7,
+                "width": 1.5,
+                "height": 1.2,
+                "sill_height": 0.9,
+                "type": "sliding"
+              }
+            ],
+            "furniture": [
+              {
+                "type": "sofa",
+                "position": {
+                  "x": 3,
+                  "y": 1,
+                  "rotation": 0
+                },
+                "label": "소파"
+              },
+              {
+                "type": "table",
+                "position": {
+                  "x": 3,
+                  "y": 2.5,
+                  "rotation": 0
+                },
+                "label": "테이블"
+              }
+            ]
+          },
+          {
+            "name": "주방",
+            "type": "kitchen",
+            "area": 10,
+            "geometry": {
+              "type": "Polygon",
+              "coordinates": [
+                [6, 0],
+                [9, 0],
+                [9, 4],
+                [6, 4],
+                [6, 0]
+              ]
+            },
+            "doors": [
+              {
+                "wall_index": 3,
+                "position": 0.5,
+                "width": 0.8,
+                "type": "single"
+              }
+            ],
+            "windows": [
+              {
+                "wall_index": 1,
+                "position": 0.5,
+                "width": 1.2,
+                "type": "awning"
+              }
+            ],
+            "furniture": [
+              {
+                "type": "refrigerator",
+                "position": {
+                  "x": 8.5,
+                  "y": 0.5,
+                  "rotation": 0
+                },
+                "dimensions": {
+                  "width": 0.7,
+                  "depth": 0.7,
+                  "height": 1.8
+                }
+              },
+              {
+                "type": "sink",
+                "position": {
+                  "x": 7.5,
+                  "y": 0.5,
+                  "rotation": 0
+                }
+              }
+            ]
+          },
+          {
+            "name": "침실1",
+            "type": "bedroom",
+            "area": 12,
+            "geometry": {
+              "type": "Polygon",
+              "coordinates": [
+                [0, 4],
+                [4, 4],
+                [4, 8],
+                [0, 8],
+                [0, 4]
+              ]
+            },
+            "doors": [
+              {
+                "wall_index": 0,
+                "position": 0.8,
+                "width": 0.9
+              }
+            ],
+            "windows": [
+              {
+                "wall_index": 2,
+                "position": 0.5,
+                "width": 1.5
+              }
+            ],
+            "furniture": [
+              {
+                "type": "bed",
+                "position": {
+                  "x": 2,
+                  "y": 6,
+                  "rotation": 0
+                },
+                "dimensions": {
+                  "width": 2.0,
+                  "depth": 1.5,
+                  "height": 0.5
+                },
+                "label": "더블 베드"
+              },
+              {
+                "type": "wardrobe",
+                "position": {
+                  "x": 0.5,
+                  "y": 7.5,
+                  "rotation": 0
+                }
+              }
+            ]
+          },
+          {
+            "name": "침실2",
+            "type": "bedroom",
+            "area": 10,
+            "geometry": {
+              "type": "Polygon",
+              "coordinates": [
+                [4, 4],
+                [7, 4],
+                [7, 8],
+                [4, 8],
+                [4, 4]
+              ]
+            },
+            "doors": [
+              {
+                "wall_index": 0,
+                "position": 0.5,
+                "width": 0.9
+              }
+            ],
+            "windows": [
+              {
+                "wall_index": 2,
+                "position": 0.5,
+                "width": 1.2
+              }
+            ],
+            "furniture": [
+              {
+                "type": "bed",
+                "position": {
+                  "x": 5.5,
+                  "y": 6,
+                  "rotation": 0
+                },
+                "dimensions": {
+                  "width": 1.5,
+                  "depth": 2.0,
+                  "height": 0.5
+                },
+                "label": "싱글 베드"
+              },
+              {
+                "type": "desk",
+                "position": {
+                  "x": 6.5,
+                  "y": 7.5,
+                  "rotation": 90
+                },
+                "label": "책상"
+              }
+            ]
+          },
+          {
+            "name": "욕실",
+            "type": "bathroom",
+            "area": 5,
+            "geometry": {
+              "type": "Polygon",
+              "coordinates": [
+                [7, 4],
+                [9, 4],
+                [9, 7],
+                [7, 7],
+                [7, 4]
+              ]
+            },
+            "doors": [
+              {
+                "wall_index": 0,
+                "position": 0.3,
+                "width": 0.8,
+                "type": "sliding"
+              }
+            ],
+            "windows": [
+              {
+                "wall_index": 1,
+                "position": 0.5,
+                "width": 0.6,
+                "type": "awning"
+              }
+            ],
+            "furniture": [
+              {
+                "type": "toilet",
+                "position": {
+                  "x": 8.5,
+                  "y": 4.5,
+                  "rotation": 0
+                }
+              },
+              {
+                "type": "sink",
+                "position": {
+                  "x": 7.5,
+                  "y": 4.5,
+                  "rotation": 0
+                }
+              },
+              {
+                "type": "bathtub",
+                "position": {
+                  "x": 8,
+                  "y": 6,
+                  "rotation": 0
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "structure": {
+      "type": "concrete"
+    },
+    "materials": {
+      "exterior_wall": "Concrete",
+      "interior_wall": "Gypsum Board",
+      "flooring": "Oak Wood",
+      "roofing": "Concrete Slab"
+    }
+  }
+}

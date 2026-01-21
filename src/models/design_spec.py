@@ -37,6 +37,8 @@ class RoomType(str, Enum):
     HALLWAY = "hallway"
     BALCONY = "balcony"
     UTILITY = "utility"
+    ENTRANCE = "entrance"
+    PARKING = "parking"
     OTHER = "other"
 
 

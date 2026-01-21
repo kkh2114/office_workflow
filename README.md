@@ -1,16 +1,29 @@
 # LLM-CAD Integration System
 
-**Autonomous Architectural Design System (A-ADS)** - MVP Phase 1
+**Autonomous Architectural Design System (A-ADS)** - Phase 2+ Complete ✅
 
-LLM-CAD 통합 시스템은 설계 기획문서(JSON)를 입력받아 기획에 적합한 CAD 도면을 자동으로 생성하는 워크플로우 시스템입니다.
+LLM-CAD 통합 시스템은 자연어 또는 JSON 기획문서를 입력받아 완전한 건축 설계 도면과 분석 보고서를 자동으로 생성하는 통합 워크플로우 시스템입니다.
 
-## Features (MVP)
+## Features (Complete)
 
+### Phase 1: Core CAD Generation ✅
 - **JSON 기반 설계 스펙**: 구조화된 JSON 스키마로 모든 설계 정보 관리
 - **AutoCAD DXF 생성**: ezdxf 라이브러리 사용 (AutoCAD 설치 불필요)
 - **자동 평면도 생성**: 벽, 문, 창문, 가구 자동 배치
 - **데이터 검증**: JSON 스키마 기반 엄격한 검증
-- **확장 가능한 아키텍처**: MCP 프로토콜 기반, 추후 Revit/Rhino 지원 확장 가능
+
+### Phase 2: Multi-Agent System ✅
+- **Orchestrator Agent**: Claude API 통합, 자연어 → JSON 변환, 대화 관리
+- **CAD-MCP Server**: DXF 생성 도구를 MCP 프로토콜로 노출
+- **Schema-MCP Server**: JSON 스키마 검증 도구 제공
+- **Revit Agent**: IFC (BIM) 파일 생성
+- **Rhino Agent**: 3D 파라메트릭 모델 (.3dm) 생성
+
+### Phase 3: Analysis & Design ✅
+- **Site Analysis Agent**: 대지 분석, 일조권 계산, 그림자 분석
+- **Structural Agent**: 구조 설계, 하중 계산, 기둥/보 설계
+- **MEP Agent**: 설비 시스템 (기계/전기/배관) 설계
+- **Compliance Agent**: 건축법규 검증 (용적률/건폐율/주차대수 등)
 
 ## System Requirements
 

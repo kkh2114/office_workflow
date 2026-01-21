@@ -176,6 +176,33 @@ class AutoCADAgent:
 
         return stats
 
+    def analyze_floor_plan_from_json(
+        self,
+        json_path: Path,
+        floor_level: int = 1
+    ) -> dict:
+        """
+        Analyze floor plan from JSON file.
+
+        Args:
+            json_path: Path to JSON specification
+            floor_level: Floor level to analyze (default: 1)
+
+        Returns:
+            Dictionary with analysis statistics
+        """
+        import json
+
+        # Load JSON
+        with open(json_path, 'r', encoding='utf-8') as f:
+            spec_dict = json.load(f)
+
+        # Convert to DesignSpec
+        spec = DesignSpec(**spec_dict)
+
+        # Analyze
+        return self.analyze_floor_plan(spec, floor_level)
+
     def validate_specification(self, spec: DesignSpec) -> tuple[bool, list[str]]:
         """
         Validate a design specification.
